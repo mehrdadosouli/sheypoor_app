@@ -1,0 +1,64 @@
+@import url('./reset.css');
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+@font-face {
+  font-family: "iransans-regular";
+  src: url(./fonts/iran_sans/eot/IRANSansX-Regular.eot),
+    url(./fonts/iran_sans/ttf/IRANSansX-Regular.ttf),
+    url(./fonts/iran_sans/woff/IRANSansX-Regular.woff),
+    url(./fonts/iran_sans/woff2/IRANSansX-Regular.woff2);
+  font-weight: 400; /* Normal weight */
+}
+
+@font-face {
+  font-family: "iransans-bold";
+  src: url(./fonts/iran_sans/eot/IRANSansX-Bold.eot),
+    url(./fonts/iran_sans/ttf/IRANSansX-bold.ttf),
+    url(./fonts/iran_sans/woff/IRANSansX-bold.woff),
+    url(./fonts/iran_sans/woff2/IRANSansX-bold.woff2);
+  font-weight: 700; /* Bold weight */
+}
+
+@font-face {
+  font-family: "iransans-medium";
+  src: url(./fonts/iran_sans/eot/IRANSansX-Medium.eot),
+    url(./fonts/iran_sans/ttf/IRANSansX-Medium.ttf),
+    url(./fonts/iran_sans/woff/IRANSansX-Medium.woff),
+    url(./fonts/iran_sans/woff2/IRANSansX-Medium.woff2);
+  font-weight: 500; /* Medium weight */
+}
+
+html {
+    font-size: 62.5%;
+  }
+  * {
+    outline: none;
+    color: var(--text-color);
+    }
+    body {
+        display: flex;
+        font-family: 'iransans-regular';
+        font-size: 1.6rem;
+        align-items: center;
+        justify-content: center;
+  }
+body {
+	line-height: 1.5;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
