@@ -3,6 +3,7 @@ import { getCities } from '../services/allCities'
 import { useQuery } from '@tanstack/react-query'
 import { setCookieCity } from '../utils/func'
 import { useNavigate } from 'react-router-dom'
+import Loading from '../components/Loading'
 
 function Home() {
   const [search, setSearch] = useState('')
@@ -30,7 +31,7 @@ function Home() {
   const resultCity = allcity?.cities?.filter(item => item.popular == true)
   return (
     <div className='container flex flex-col gap-10'>
-      <p className='text-center'>اﮔﻪ دﻧﺒﺎل ﭼﯿﺰی ﻫﺴﺘﯽ، ﺷﻬﺮت رو اﻧﺘﺨﺎب ﮐﻦ و ﺗﻮ دﺳﺘﻪ‌ﺑﻨﺪی‌ﻫﺎ ﺑﻪ دﻧﺒﺎﻟﺶ
+      <p className='text-center my-10'>اﮔﻪ دﻧﺒﺎل ﭼﯿﺰی ﻫﺴﺘﯽ، ﺷﻬﺮت رو اﻧﺘﺨﺎب ﮐﻦ و ﺗﻮ دﺳﺘﻪ‌ﺑﻨﺪی‌ﻫﺎ ﺑﻪ دﻧﺒﺎﻟﺶ
         ﺑﮕﺮد. اﮔﺮ ﻫﻢ ﻣﯽ‌ﺧﻮای ﭼﯿﺰی ﺑﻔﺮوﺷﯽ، ﭼﻨﺪ ﺗﺎ ﻋﮑﺲ ﺧﻮب ازش ﺑﮕﯿﺮ و آﮔﻬﯿﺖ رو
         ﺑﭽﺴﺒﻮن ﺑﻪ شیپور</p>
       <input type="text" value={search} onChange={searchHandler} placeholder='جستجوی شهر' className='w-full p-3 border border-solid' />
@@ -40,8 +41,8 @@ function Home() {
       <h2 className='font-extrabold font-iransans-bold'>شهر های پر بازدید</h2>
       <div className='grid grid-cols-5 gap-10 my-5'>
         {
-          isLoading ? <h1>Loading....</h1> :
-            resultCity.map(item => <span className='w-fit cursor-pointer' key={item.id} onClick={clickHandler}>{item.name}</span>)
+          isLoading ? <Loading /> :
+            resultCity?.map(item => <span className='w-fit cursor-pointer' key={item.id} onClick={clickHandler}>{item.name}</span>)
         }
       </div>
     </div>
