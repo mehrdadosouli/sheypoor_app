@@ -33,16 +33,13 @@ footer, header, hgroup, menu, nav, section {
 html {
     font-size: 62.5%;
   }
-  * {
-    outline: none;
-    color: var(--text-color);
-    }
-    body {
-        display: flex;
+* {
+  outline: none;
+  color: var(--text-color);
+  }
+body {
         font-family: 'iransans-regular';
         font-size: 1.6rem;
-        align-items: center;
-        justify-content: center;
   }
 body {
 	line-height: 1.5;

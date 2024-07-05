@@ -5,9 +5,12 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {
-      
+    fontFamily:{
+      'iransans-regular':'iransans-regular',
+      'iransans-medium':'iransans-medium',
+      'iransans-bold':'iransans-bold',
     },
+    extend: {},
   },
   plugins: [],
 }
