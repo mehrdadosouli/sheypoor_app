@@ -1,16 +1,10 @@
+import { useQuery } from '@tanstack/react-query'
 import React, { useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
-import { getCookieCity } from '../utils/func'
+import { getPostPoblished } from '../services/getPostPublished'
 
 function Main() {
-  const [param,setParam]=useSearchParams()
-  useEffect(()=>{
-    let cookie=getCookieCity()
-    if(cookie){
-      setParam({city:cookie})
-    }
-  },[])
-
+ const {data:postPoblished}=useQuery({queryKey:['postpoblish'],queryFn:()=>getPostPoblished()})
+   
   return (
     <div>Main</div>
   )
