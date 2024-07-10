@@ -25,4 +25,5 @@ const relaitiveTimePost=(postedTime)=>{
   }
 }
 
+
 export { setCookieCity, getCookieCity, relaitiveTimePost };
