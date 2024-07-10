@@ -11,7 +11,7 @@ function Routers() {
     let cookie=getCookieCity()
     useEffect(()=>{
         if(cookie){
-            navigate(`/main?city=${cookie[0].city}`)
+            navigate(`/main`)
         }
     },[])
     return (

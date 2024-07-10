@@ -19,7 +19,7 @@ function Home() {
   const clickHandler = (e,id) => {
     let city=e.target.innerText
     setCookieCity(city,id)
-    navigate(`/main?city=${city}`)
+    navigate(`/main`)
   }
   useEffect(() => {
     const result = allcity?.cities.filter(item => item.name.includes(search))
