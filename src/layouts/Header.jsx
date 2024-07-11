@@ -1,11 +1,6 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-function Header() {
-  const [search,setSearch]=useState('')
-  const changeHandler=(e)=>{
-    setSearch(e.target.value)
-  }
+function Header({setFilterData, search, changeHandler}) {
   return (
     <div className='container'>
       <h1 className='text-center'>شیپور</h1>

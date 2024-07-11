@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { getPostPoblished } from '../services/getPostPublished'
 import PostBox from '../components/PostBox'
 import { getAllCategory } from '../services/getAllCategory'
