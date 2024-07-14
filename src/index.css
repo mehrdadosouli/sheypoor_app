@@ -39,4 +39,13 @@
     width: 70%;
     margin: auto;
   }
+  .active{
+    color: red;
+    margin-right: 3rem;
+    border-right: 2px solid gray;
+    padding-right: 1rem;
+  }
+  .subcategory{
+    margin-right: 3rem;
+  }
 }
