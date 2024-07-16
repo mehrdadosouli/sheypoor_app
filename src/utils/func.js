@@ -1,3 +1,5 @@
+import { getPostPoblished } from "../services/getPostPublished";
+
 const setCookieCity = (city, id) => {
   document.cookie = `city=${JSON.stringify([{ city, id }])}; pathg=/`;
 };
@@ -9,9 +11,8 @@ const getCookieCity = () => {
       result = JSON.parse(item.substring(5));
     }
   });
-  return result;
+  return result[0];
 };
-
 const relaitiveTimePost=(postedTime)=>{
   const currentTime=new Date()
   const createdTime=new Date(postedTime)
@@ -25,7 +26,36 @@ const relaitiveTimePost=(postedTime)=>{
   }
 }
 
+const filterInputSearch=(product,search)=>{
+  if(search){
+    const resultFilterSearch=product?.posts?.filter(item=>item.title.includes(search))
+    return resultFilterSearch
+  }else{
+    return product?.posts
+  }
+}
+const filterCategory=(product,category)=>{
+  if(category){
+      const resultFilterCategory= getPostPoblished({ categoryId: category?.categoryID }).then(res=>res?.posts)
+    return resultFilterCategory
+  }else{
+    return product?.posts
+  }
+}
+const filterQuryParams=(currentQuery,newQuery)=>{
+  if(newQuery.search == ""){
+    const {search,...rest}=currentQuery;
+    return rest
+  }
+  if(newQuery.category == 'همه'){
+    const {category,...rest}=currentQuery;
+    return rest
+  }
+  return {
+    ...currentQuery,
+    ...newQuery
+  }
+}
 
+export { setCookieCity, getCookieCity, relaitiveTimePost,filterInputSearch, filterQuryParams, filterCategory};
 
-
-export { setCookieCity, getCookieCity, relaitiveTimePost };

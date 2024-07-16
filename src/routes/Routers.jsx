@@ -1,41 +1,67 @@
 import React, { useEffect, useState } from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes, useNavigate, useSearchParams } from 'react-router-dom'
 import Home from '../pages/HomePage'
 import Header from '../layouts/Header'
 import Footer from '../layouts/Footer'
 import Main from '../pages/Main'
-import { getCookieCity } from '../utils/func'
 import { useQuery } from '@tanstack/react-query'
 
-function Routers() {
-    const { data: allpost } = useQuery({ queryKey: ['postpoblish'] })
+import { filterCategory, filterInputSearch, filterQuryParams, getCookieCity } from '../utils/func'
+import { getPostPoblished } from '../services/getPostPublished'
 
-    const [filterData, setFilterData] = useState({
-        search: '',
-        category: ''
-    })
+
+function Routers() {
+    const [searchParam,setSearchParam]=useSearchParams()
+    const [categoryId,setCategoryId]=useState()
+    const [query, setQuery] = useState({})
+    const [search,setSearch]=useState('')
     const [datafilter,setDataFilter]=useState()
+    const { data: allpost } = useQuery({ queryKey: ['postpoblish'], queryFn: () => getPostPoblished() })
 
     const navigate = useNavigate() 
     let cookie = getCookieCity() 
-
-    const changeHandler = (e) => {
-        setFilterData(prev => ({ ...prev, search: e.target.value }))
-        const resultFilterSearch=datafilter?.filter(item=>item.title.includes(e.target.value))
+    const changeHandler = (event) => {
+        if(event.target.name == 'search'){
+            setSearch(event.target.value)
+            setQuery(query=>filterQuryParams(query,{search: event.target.value}))  
+        }
     }
-
     useEffect(() => {  
-        setDataFilter(allpost?.posts)  
+        setQuery((query) => filterQuryParams(query, { categoryId: categoryId?.categoryID }));  
+        // const fetchCategory = async () => {  
+        //     // const data = await getPostPoblished({ categoryId: categoryId?.categoryID });  
+        //     // setDataFilter(data?.posts);  
+        // };  
+    
+        // if (categoryId) {  
+        //     fetchCategory();  
+        // }  
+    }, [categoryId]);
+
+    useEffect(()=>{
+        const funcGetting=async()=>{
+            let result=await filterInputSearch(allpost,query.search)
+            result=await filterCategory(result,categoryId)
+            setDataFilter(result)
+        }
+            funcGetting()
+            setSearchParam(query)
+        },[query])
+        
+        console.log(datafilter);
+    useEffect(() => {  
+        setDataFilter(allpost?.posts)
         if (cookie) { 
             navigate(`/main`)
         }
-    }, [datafilter,filterData])
+    }, [allpost])
+
     return (
         <>
-            <Header setFilterData={setFilterData} search={filterData.search} changeHandler={changeHandler} />
+            <Header search={search} changeHandler={changeHandler} />
             <Routes>
                 <Route path='/' element={<Home />} />
-                <Route path='/main' element={<Main />} />
+                <Route path='/main' element={<Main datafilter={datafilter} changeHandler={changeHandler} setCategoryId={setCategoryId}/>} />
             </Routes>
             <Footer />
         </>

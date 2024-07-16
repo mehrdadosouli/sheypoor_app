@@ -1,6 +1,5 @@
-import { Link } from 'react-router-dom'
 
-function Header({setFilterData, search, changeHandler}) {
+function Header({ search, changeHandler}) {
   return (
     <div className='container'>
       <h1 className='text-center'>شیپور</h1>
@@ -14,7 +13,7 @@ function Header({setFilterData, search, changeHandler}) {
         </ul> */}
         <div className='flex items-center gap-10'>
           <h1 className='font-bold'>شیپور </h1>
-          <input className='border border-solid border-gray-300 p-2 rounded-md' placeholder='سرچ کنید...' type="text" value={search} onChange={changeHandler} />
+            <input className='border border-solid border-gray-300 p-2 rounded-md' placeholder='سرچ کنید...' type="text" value={search} name="search" onChange={changeHandler} />
         </div>
       </section>
     </div>
