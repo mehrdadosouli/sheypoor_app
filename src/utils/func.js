@@ -11,7 +11,7 @@ const getCookieCity = () => {
       result = JSON.parse(item.substring(5));
     }
   });
-  return result[0];
+  return result; 
 };
 const relaitiveTimePost=(postedTime)=>{
   const currentTime=new Date()
@@ -34,14 +34,7 @@ const filterInputSearch=(product,search)=>{
     return product?.posts
   }
 }
-const filterCategory=(product,category)=>{
-  if(category){
-      const resultFilterCategory= getPostPoblished({ categoryId: category?.categoryID }).then(res=>res?.posts)
-    return resultFilterCategory
-  }else{
-    return product?.posts
-  }
-}
+
 const filterQuryParams=(currentQuery,newQuery)=>{
   if(newQuery.search == ""){
     const {search,...rest}=currentQuery;
@@ -57,5 +50,5 @@ const filterQuryParams=(currentQuery,newQuery)=>{
   }
 }
 
-export { setCookieCity, getCookieCity, relaitiveTimePost,filterInputSearch, filterQuryParams, filterCategory};
+export { setCookieCity, getCookieCity, relaitiveTimePost,filterInputSearch, filterQuryParams};
 

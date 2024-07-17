@@ -4,6 +4,7 @@ import Loading from '../components/Loading'
 import nopic from '../assets/main/noPicture.png'
 import { relaitiveTimePost } from '../utils/func'
 export default function PostBox({ post }) {
+    console.log('post',post);
     return (
         <div className='min-h-96 flex justify-center items-center'>
             {

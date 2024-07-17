@@ -6,7 +6,7 @@ import Footer from '../layouts/Footer'
 import Main from '../pages/Main'
 import { useQuery } from '@tanstack/react-query'
 
-import { filterCategory, filterInputSearch, filterQuryParams, getCookieCity } from '../utils/func'
+import {  filterInputSearch, filterQuryParams, getCookieCity } from '../utils/func'
 import { getPostPoblished } from '../services/getPostPublished'
 
 
@@ -27,28 +27,22 @@ function Routers() {
         }
     }
     useEffect(() => {  
-        setQuery((query) => filterQuryParams(query, { categoryId: categoryId?.categoryID }));  
-        // const fetchCategory = async () => {  
-        //     // const data = await getPostPoblished({ categoryId: categoryId?.categoryID });  
-        //     // setDataFilter(data?.posts);  
-        // };  
-    
-        // if (categoryId) {  
-        //     fetchCategory();  
-        // }  
+         if(categoryId){
+            getPostPoblished({ categoryId: categoryId?.categoryID }).then(res=>setDataFilter(res?.posts))
+            setQuery((query) => filterQuryParams(query, { categoryId: categoryId?.categoryID })); 
+         }
     }, [categoryId]);
 
     useEffect(()=>{
         const funcGetting=async()=>{
             let result=await filterInputSearch(allpost,query.search)
-            result=await filterCategory(result,categoryId)
             setDataFilter(result)
         }
             funcGetting()
             setSearchParam(query)
+            
         },[query])
         
-        console.log(datafilter);
     useEffect(() => {  
         setDataFilter(allpost?.posts)
         if (cookie) { 
