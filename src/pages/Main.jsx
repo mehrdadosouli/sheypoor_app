@@ -1,22 +1,41 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import PostBox from '../components/PostBox'
 import { getAllCategory } from '../services/getAllCategory'
 import SubCategoryCreate from '../components/SubCategoryCreate'
 import FilterSideBar from '../components/FilterSideBar'
+import { filterQuryParams, getCookieCity } from '../utils/func'
+import { getPostPoblished } from '../services/getPostPublished'
 
-function Main({datafilter,changeHandler,setCategoryId}) {
-  const [filter,setFilter]=useState(null)
+function Main({datafilter,setDataFilter,setQuery}) {
+
   const [id, setId] = useState()
   const navigate = useNavigate()
+  const [categoryId,setCategoryId]=useState()
+  let cookie = getCookieCity() 
+  const { data: allpost } = useQuery({ queryKey: ['postpoblish'], queryFn: () => getPostPoblished() })
   const { data: allcategory } = useQuery({ queryKey: ['getcategory'], queryFn: () => getAllCategory() })
   const clickHandler = () => {
     navigate('/main')
     window.location.reload()
 
   }
+
+  useEffect(() => {  
+    setDataFilter(allpost?.posts)
+    if (cookie) { 
+        navigate(`/main`)
+    }
+}, [allpost])
+
+useEffect(() => {  
+  if(categoryId){
+     getPostPoblished({ categoryId: categoryId?.categoryID }).then(res=>{setDataFilter(res?.posts);setDataFilter(res?.posts)})
+     setQuery((query) => filterQuryParams(query, { categoryId: categoryId?.categoryID })); 
+  }
+}, [categoryId]);
 
   return (
     <div className='flex lg:px-40 px-5'>

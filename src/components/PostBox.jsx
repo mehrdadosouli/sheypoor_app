@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 import Loading from '../components/Loading'
 import nopic from '../assets/main/noPicture.png'
 import { relaitiveTimePost } from '../utils/func'
-export default function PostBox({ post }) {
-    console.log('post',post);
+function PostBox({ post }) {
     return (
         <div className='min-h-96 flex justify-center items-center'>
             {
@@ -35,3 +34,5 @@ export default function PostBox({ post }) {
         </div>
     )
 }
+
+export default memo(PostBox)

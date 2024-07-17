@@ -27,6 +27,7 @@ const relaitiveTimePost=(postedTime)=>{
 }
 
 const filterInputSearch=(product,search)=>{
+  console.log('product',product);
   if(search){
     const resultFilterSearch=product?.posts?.filter(item=>item.title.includes(search))
     return resultFilterSearch

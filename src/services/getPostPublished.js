@@ -6,7 +6,6 @@ const getPostPoblished=async(categoryId)=>{
     try {
         const res=await api.get(`v1/post?city=${city[0]?.id}${categoryId ? `&categoryId=${categoryId.categoryId}` : ""}`)
         const data=await res.data
-        console.log('data',data);
         return data.data
     } catch (error) {
         return error
