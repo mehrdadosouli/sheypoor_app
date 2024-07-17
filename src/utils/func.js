@@ -27,10 +27,16 @@ const relaitiveTimePost=(postedTime)=>{
 }
 
 const filterInputSearch=(product,search)=>{
-  console.log('product',product);
   if(search){
     const resultFilterSearch=product?.posts?.filter(item=>item.title.includes(search))
     return resultFilterSearch
+  }else{
+    return product?.posts
+  }
+}
+const filterCategory=(product,category)=>{
+  if(category){
+   return getPostPoblished({ categoryId: category?.categoryID }).then(res=>res)
   }else{
     return product?.posts
   }
@@ -51,5 +57,5 @@ const filterQuryParams=(currentQuery,newQuery)=>{
   }
 }
 
-export { setCookieCity, getCookieCity, relaitiveTimePost,filterInputSearch, filterQuryParams};
+export { setCookieCity, getCookieCity, relaitiveTimePost,filterInputSearch, filterQuryParams ,filterCategory};
 

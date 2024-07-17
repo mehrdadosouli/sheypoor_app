@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 
@@ -9,33 +9,15 @@ import FilterSideBar from '../components/FilterSideBar'
 import { filterQuryParams, getCookieCity } from '../utils/func'
 import { getPostPoblished } from '../services/getPostPublished'
 
-function Main({datafilter,setDataFilter,setQuery}) {
-
+function Main({datafilter,setCategoryId}) {
   const [id, setId] = useState()
-  const navigate = useNavigate()
-  const [categoryId,setCategoryId]=useState()
-  let cookie = getCookieCity() 
-  const { data: allpost } = useQuery({ queryKey: ['postpoblish'], queryFn: () => getPostPoblished() })
+ const navigate=useNavigate()
   const { data: allcategory } = useQuery({ queryKey: ['getcategory'], queryFn: () => getAllCategory() })
   const clickHandler = () => {
     navigate('/main')
     window.location.reload()
-
   }
 
-  useEffect(() => {  
-    setDataFilter(allpost?.posts)
-    if (cookie) { 
-        navigate(`/main`)
-    }
-}, [allpost])
-
-useEffect(() => {  
-  if(categoryId){
-     getPostPoblished({ categoryId: categoryId?.categoryID }).then(res=>{setDataFilter(res?.posts);setDataFilter(res?.posts)})
-     setQuery((query) => filterQuryParams(query, { categoryId: categoryId?.categoryID })); 
-  }
-}, [categoryId]);
 
   return (
     <div className='flex lg:px-40 px-5'>
@@ -86,4 +68,4 @@ useEffect(() => {
   )
 }
 
-export default Main
+export default memo(Main)
