@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react'
+import { memo, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 
@@ -6,8 +6,7 @@ import PostBox from '../components/PostBox'
 import { getAllCategory } from '../services/getAllCategory'
 import SubCategoryCreate from '../components/SubCategoryCreate'
 import FilterSideBar from '../components/FilterSideBar'
-import { filterQuryParams, getCookieCity } from '../utils/func'
-import { getPostPoblished } from '../services/getPostPublished'
+
 
 function Main({datafilter,setCategoryId}) {
   const [id, setId] = useState()

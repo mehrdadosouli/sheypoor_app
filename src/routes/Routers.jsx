@@ -29,7 +29,7 @@ function Routers() {
     }
 
     useEffect(() => {    
-        if (cookie.length) { 
+        if (cookie) { 
             navigate("/main")
         }
     }, [])
@@ -39,24 +39,20 @@ function Routers() {
     },[allpost])
 
     useEffect(()=>{
-       const aa=async()=>{
+       const filteringFunc=async()=>{
          let result=await filterCategory(allpost,categoryId)
-         console.log(result);
         result=filterInputSearch(result,query.search)
         setDataFilter(result)
        }
-       aa()
+       filteringFunc()
        
         setSearchParam(query)
-        },[query,categoryId,search])
-
+    },[query,categoryId,search])
+    
     useEffect(()=>{
         if(categoryId){
-            
-            // setQuery((query) => filterQuryParams(query, { categoryId: categoryId?.categoryID })); 
+            setQuery((query) => filterQuryParams(query, { categoryId: categoryId?.categoryID })); 
            }
-       
-        // setSearchParam(query)
         },[categoryId])
 
     return (

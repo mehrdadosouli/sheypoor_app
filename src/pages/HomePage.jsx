@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getCities } from '../services/allCities'
 import { useQuery } from '@tanstack/react-query'
-import { setCookieCity } from '../utils/func'
+import { getCookieCity, setCookieCity } from '../utils/func'
 import { useNavigate } from 'react-router-dom'
 import Loading from '../components/Loading'
 import { FaSearch } from 'react-icons/fa'
@@ -10,6 +10,7 @@ function Home() {
   const [search, setSearch] = useState('')
   const [filterCity, setFilterCity] = useState([])
   const navigate = useNavigate()
+  let cookie = getCookieCity() 
   const { data: allcity, isLoading } = useQuery({ queryKey: ['fetch-All-City'], queryFn: getCities })
 
   const searchHandler = (e) => {
@@ -29,6 +30,12 @@ function Home() {
       setFilterCity([])
     }
   }, [search])
+
+  useEffect(() => { 
+    if (cookie) { 
+        navigate("/main")
+    }
+},[cookie])
 
   const resultCity = allcity?.cities?.filter(item => item.popular == true)
   return (

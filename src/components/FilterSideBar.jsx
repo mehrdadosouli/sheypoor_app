@@ -14,15 +14,15 @@ function FilterSideBar({ allcategory, id }) {
                             <select name="" id="">
                                 {
                                     item?.options?.map(elem=>
-                                        <option key={elem._id} value={elem}>{elem}</option>
+                                        <option key={elem} value={elem}>{elem}</option>
                                     )
                                 }
                             </select>
                         </div>
                         }
-                        if(item.type == 'checkbox'){
-                            console.log(item)
-                        }
+                        // if(item.type == 'checkbox'){
+                        //     console.log(item)
+                        // }
                     })
                 }</div>))
                     :
