@@ -11,7 +11,7 @@ function Home() {
   const [filterCity, setFilterCity] = useState([])
   const navigate = useNavigate()
   let cookie = getCookieCity() 
-  const { data: allcity, isLoading } = useQuery({ queryKey: ['fetch-All-City'], queryFn: getCities })
+  const { data: allcity, isLoading } = useQuery({ queryKey: ['fetchAllCity'], queryFn: getCities })
 
   const searchHandler = (e) => {
     setSearch(e.target.value)
@@ -23,7 +23,7 @@ function Home() {
     navigate(`/main`)
   }
   useEffect(() => {
-    const result = allcity?.cities.filter(item => item.name.includes(search))
+    const result = allcity?.cities?.filter(item => item?.name?.includes(search))
     if (search) {
       setFilterCity(result)
     } else {

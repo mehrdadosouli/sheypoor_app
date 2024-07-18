@@ -13,6 +13,7 @@ import { useQuery } from '@tanstack/react-query'
 
 
 function Routers() {
+    const [modal,setModal]=useState(false)
     const [searchParam,setSearchParam]=useSearchParams()
     const { data: allpost } = useQuery({ queryKey: ['postpoblish'], queryFn: () => getPostPoblished() })
     let cookie = getCookieCity() 
@@ -24,8 +25,15 @@ function Routers() {
     const changeHandler = (event) => {
         if(event.target.name == 'search'){
             setSearch(event.target.value)
-            setQuery(query=>filterQuryParams(query,{search: event.target.value}))  
+            setQuery(query => filterQuryParams(query,{search: event.target.value}))  
         }
+    }
+
+    const focusHandler=()=>{
+        setModal(true)
+    }
+    const closBtnHandler=()=>{
+        setModal(false)
     }
 
     useEffect(() => {    
@@ -56,14 +64,15 @@ function Routers() {
         },[categoryId])
 
     return (
-        <>
-            <Header search={search} changeHandler={changeHandler} />
+        <div>
+            <Header search={search} changeHandler={changeHandler} focusHandler={focusHandler} modal={modal} setQuery={setQuery} setSearch={setSearch} closBtnHandler={closBtnHandler} />
             <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/main' element={<Main setCategoryId={setCategoryId}  datafilter={datafilter} />} />
             </Routes>
             <Footer />
-        </>
+            <div className={modal && `size-full z-20 fixed top-0 left-0 bg-gray-50 opacity-50`} onClick={closBtnHandler}></div>
+        </div>
     )
 }
 
