@@ -24,7 +24,8 @@ function FilterSideBar({ allcategory, id }) {
                         //     console.log(item)
                         // }
                     })
-                }</div>))
+                }
+                </div>))
                     :
                     ""
             }

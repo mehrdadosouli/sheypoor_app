@@ -68,7 +68,7 @@ function Routers() {
             <Header search={search} changeHandler={changeHandler} focusHandler={focusHandler} modal={modal} setQuery={setQuery} setSearch={setSearch} closBtnHandler={closBtnHandler} />
             <Routes>
                 <Route path='/' element={<Home />} />
-                <Route path='/main' element={<Main setCategoryId={setCategoryId}  datafilter={datafilter} />} />
+                <Route path='/main' element={<Main setCategoryId={setCategoryId} datafilter={datafilter} setDataFilter={setDataFilter} />} />
             </Routes>
             <Footer />
             <div className={modal && `size-full z-20 fixed top-0 left-0 bg-gray-50 opacity-50`} onClick={closBtnHandler}></div>
