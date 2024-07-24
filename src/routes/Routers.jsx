@@ -9,10 +9,14 @@ import Main from '../pages/Main'
 import {  filterCategory, filterInputSearch, filterQuryParams, getCookieCity } from '../utils/func'
 import { getPostPoblished } from '../services/getPostPublished'
 import { useQuery } from '@tanstack/react-query'
+import { useSelector, useDispatch } from 'react-redux'
+import { increment } from '../redux/dataSlice'
 
 
 
 function Routers() {
+    const dispatch=useDispatch()
+    const allProducts=useSelector((data)=>data?.data?.products)
     const [modal,setModal]=useState(false)
     const [searchParam,setSearchParam]=useSearchParams()
     const { data: allpost } = useQuery({ queryKey: ['postpoblish'], queryFn: () => getPostPoblished() })
@@ -28,10 +32,10 @@ function Routers() {
             setQuery(query => filterQuryParams(query,{search: event.target.value}))  
         }
     }
-
+  
     const focusHandler=()=>{
         setModal(true)
-    }
+    }  
     const closBtnHandler=()=>{
         setModal(false)
     }
@@ -39,11 +43,14 @@ function Routers() {
     useEffect(() => {    
         if (cookie) { 
             navigate("/main")
-        }
+        } 
     }, [])
     
     useEffect(()=>{
-        setDataFilter(allpost?.posts)
+        setDataFilter(allpost?.posts) 
+        if(allpost?.posts){
+            dispatch(increment(allpost?.posts)) 
+        }
     },[allpost])
 
     useEffect(()=>{

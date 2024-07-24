@@ -64,11 +64,23 @@ const filterQuryParams = (currentQuery, newQuery) => {
   };
 };
 
+const filteringByPrice = (data,priceLess,priceMore) => {
+  if (priceLess == "default") {
+    if (priceMore == "default") {
+      return data
+    }else{
+      let result=data?.filter(item=>item.price <= priceMore)
+      console.log(result);
+      return result
+    }
+  }
+};
 export {
   setCookieCity,
   getCookieCity,
   relaitiveTimePost,
   filterInputSearch,
-  filterQuryParams,
+  filterQuryParams, 
   filterCategory,
+  filteringByPrice,
 };
