@@ -2,6 +2,7 @@ import { filterQuryParams } from "../utils/func"
 
 function Header({ search, changeHandler, focusHandler, modal, setQuery, setSearch, closBtnHandler }) {
   let sugestKeyWord = ["لباس", "خودرو", "کفش", "ماشین", "لپ تاپ"]
+
   return (
     <div className='container relative z-50'>
       <h1 className='text-center'>شیپور</h1>

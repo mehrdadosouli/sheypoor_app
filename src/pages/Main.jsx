@@ -7,15 +7,19 @@ import { getAllCategory } from '../services/getAllCategory'
 import SubCategoryCreate from '../components/SubCategoryCreate'
 import FilterSideBar from '../components/FilterSideBar'
 import { filteringByPrice } from '../utils/func'
+import { useDispatch, useSelector } from 'react-redux'
+import { increment } from '../redux/dataSlice'
 
 
-function Main({ datafilter, setCategoryId, setDataFilter }) {
+function Main({ setCategoryId }) {
+  const allProducts = useSelector((data) => data?.data?.products)
+  const allFilterProducts = useSelector((data) => data?.data?.filtersProducts)
+  const dispatch=useDispatch()
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [toggle, setToggle] = useState(false);
   const [priceMore, setPriceMore] = useState('default');
   const [priceLess, setPriceLess] = useState('default');
-  const [filters, setFilters] = useState([])
   const [id, setId] = useState()
   const navigate = useNavigate()
   const { data: allcategory } = useQuery({ queryKey: ['getcategory'], queryFn: () => getAllCategory() })
@@ -30,16 +34,17 @@ function Main({ datafilter, setCategoryId, setDataFilter }) {
     }
     if (e.target.id == 'toggle2') {
       setChecked2(!checked2);
+      console.log(checked2);
     }
   };
 
 
   useEffect(() => {
     if (checked2) {
-      let resultFilter = datafilter?.filter(i => i?.pics?.length)
-      setDataFilter(resultFilter)
+      let resultFilter = allFilterProducts?.filter(i => i.pics.length)
+      dispatch(increment(resultFilter))
     } else {
-      // setDataFilter(filters)
+      dispatch(increment(allProducts))
     }
     if (checked1) {
 
@@ -47,8 +52,8 @@ function Main({ datafilter, setCategoryId, setDataFilter }) {
   }, [checked1, checked2])
 
   useEffect(() => {
-    const res= filteringByPrice(datafilter,priceLess,priceMore)
-    setDataFilter(res);
+    const res= filteringByPrice(allFilterProducts,priceLess,priceMore)
+    dispatch(increment(res))
   }, [priceLess, priceMore])
 
   const toggleBtn = () => {
@@ -132,7 +137,7 @@ function Main({ datafilter, setCategoryId, setDataFilter }) {
             </div>
 
             <label htmlFor="toggle1" className="flex gap-28 items-center cursor-pointer">
-              <input type="checkbox" id="toggle1" checked={checked1} onChange={handleCheck} className="hidden" />
+              <input type="checkbox" id="toggle1" checked={checked1 && checked1} onChange={handleCheck} className="hidden" />
               <span className="ml-3 text-gray-700 font-medium">معاوضه</span>
               <div className={`w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 ${checked1 ? 'bg-green-500' : 'bg-gray-400'}`}>
                 <div className={`w-6 h-6 bg-white rounded-full shadow-md transform transition duration-300 ${!checked1 ? 'translate-x-0' : '-translate-x-6'}`} />
@@ -140,7 +145,7 @@ function Main({ datafilter, setCategoryId, setDataFilter }) {
             </label>
 
             <label htmlFor="toggle2" className="flex gap-12 items-center cursor-pointer">
-              <input type="checkbox" id="toggle2" checked={checked2} onChange={handleCheck} className="hidden" />
+              <input type="checkbox" id="toggle2" checked={checked2 && checked2} onChange={handleCheck} className="hidden" />
               <span className="ml-3 text-gray-700 font-medium">فقط عکس دار</span>
               <div className={`w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 ${checked2 ? 'bg-green-500' : 'bg-gray-400'}`}>
                 <div className={`w-6 h-6 bg-white rounded-full shadow-md transform transition duration-300 ${!checked2 ? 'translate-x-0' : '-translate-x-6'}`} />
@@ -150,7 +155,7 @@ function Main({ datafilter, setCategoryId, setDataFilter }) {
         </div>
       </div>
       <div className='w-4/5'>
-        <PostBox post={datafilter} />
+        <PostBox post={allFilterProducts} />
       </div>
     </div>
   )

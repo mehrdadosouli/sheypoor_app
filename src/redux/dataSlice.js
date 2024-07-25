@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   products: [],
+  filtersProducts:[]
 }
 
 export const dataSlice = createSlice({
@@ -9,7 +10,10 @@ export const dataSlice = createSlice({
   initialState,
   reducers: {
     increment: (state, action) => {
-        state.products.push(action.payload);
+        state.filtersProducts=action.payload
+    },
+    addToProducts: (state, action) => {
+        state.products=action.payload;
     },
     decrement: (state, action) => { 
     //   state.value -= 1
@@ -21,5 +25,5 @@ export const dataSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = dataSlice.actions
+export const { increment, decrement, incrementByAmount,addToProducts } = dataSlice.actions
 export default dataSlice.reducer

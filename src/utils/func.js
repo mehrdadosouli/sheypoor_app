@@ -70,7 +70,6 @@ const filteringByPrice = (data,priceLess,priceMore) => {
       return data
     }else{
       let result=data?.filter(item=>item.price <= priceMore)
-      console.log(result);
       return result
     }
   }
