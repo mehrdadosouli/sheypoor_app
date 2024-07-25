@@ -52,7 +52,7 @@ function Main({ setCategoryId }) {
   }, [checked1, checked2])
 
   useEffect(() => {
-    const res= filteringByPrice(allFilterProducts,priceLess,priceMore)
+    const res= filteringByPrice(allProducts,allFilterProducts,priceLess,priceMore)
     dispatch(increment(res))
   }, [priceLess, priceMore])
 
@@ -118,14 +118,14 @@ function Main({ setCategoryId }) {
                     <option value="30000">30 هزار تومان</option>
                     <option value="50000">50 هزار تومان</option>
                     <option value="100000">100 هزار تومان</option>
-                    <option value="900000">900 هزار تومان</option>
+                    <option value="120000000">120 میلیون تومان</option>
                   </select>
                 </div>
                 <div className='flex justify-between items-center'>
                   <span>حداکثر</span>
                   <select name="more" id="" className='border rounded-lg p-1' value={priceMore} onChange={(e) => setPriceMore(e.target.value)}>
                     <option value="default">default</option>
-                    <option value="900000">900 هزار تومان</option>
+                    <option value="120000000">120 میلیون تومان</option>
                     <option value="100000">100 هزار تومان</option>
                     <option value="50000">50 هزار تومان</option>
                     <option value="30000">30 هزار تومان</option>

@@ -64,12 +64,20 @@ const filterQuryParams = (currentQuery, newQuery) => {
   };
 };
 
-const filteringByPrice = (data,priceLess,priceMore) => {
+const filteringByPrice = (data,filterData,priceLess,priceMore) => {
   if (priceLess == "default") {
     if (priceMore == "default") {
       return data
     }else{
-      let result=data?.filter(item=>item.price <= priceMore)
+      let result=filterData?.filter(item=>item.price <= priceMore)
+      return result
+    }
+  }else{
+    if(priceMore == 'default'){
+      let result=filterData?.filter(item=>item.price >= priceLess)
+      return result
+    }else{
+      let result=filterData?.filter(item=>item.price >= priceLess && item.price <= priceMore)
       return result
     }
   }
