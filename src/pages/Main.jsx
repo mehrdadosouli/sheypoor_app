@@ -155,7 +155,7 @@ function Main({ setCategoryId,checked1,checked2,setChecked1,setChecked2 }) {
         </div>
       </div>
       <div className='w-4/5'>
-        <PostBox post={allFilterProducts.length ? allFilterProducts : allProducts} />
+        <PostBox post={allFilterProducts?.length ? allFilterProducts : allProducts} />
       </div>
     </div>
   )
