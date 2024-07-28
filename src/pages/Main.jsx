@@ -6,12 +6,20 @@ import PostBox from '../components/PostBox'
 import { getAllCategory } from '../services/getAllCategory'
 import SubCategoryCreate from '../components/SubCategoryCreate'
 import FilterSideBar from '../components/FilterSideBar'
+import { filteringByPrice } from '../utils/func'
+import { useDispatch, useSelector } from 'react-redux'
+import { increment } from '../redux/dataSlice'
 
 
-function Main({ datafilter, setCategoryId, setDataFilter }) {
-  const [checked1, setChecked1] = useState(false);
-  const [checked2, setChecked2] = useState(false);
-  const [filters, setFilters] = useState([])
+function Main({ setCategoryId,checked1,checked2,setChecked1,setChecked2 }) {
+  const allProducts = useSelector((data) => data?.data?.products)
+  const allFilterProducts = useSelector((data) => data?.data?.filtersProducts)
+  const dispatch=useDispatch()
+  // const [checked1, setChecked1] = useState(false);
+  // const [checked2, setChecked2] = useState(false);
+  const [toggle, setToggle] = useState(false);
+  const [priceMore, setPriceMore] = useState('default');
+  const [priceLess, setPriceLess] = useState('default');
   const [id, setId] = useState()
   const navigate = useNavigate()
   const { data: allcategory } = useQuery({ queryKey: ['getcategory'], queryFn: () => getAllCategory() })
@@ -26,25 +34,31 @@ function Main({ datafilter, setCategoryId, setDataFilter }) {
     }
     if (e.target.id == 'toggle2') {
       setChecked2(!checked2);
+      console.log(checked2);
     }
   };
- 
-
-  useEffect(()=>{
-    console.log(filters);
-    if(checked2){
-      let resultFilter=datafilter?.filter(i=>i?.pics?.length)
-      setDataFilter(resultFilter)
-    }else{
-      // setDataFilter(filters)
-      console.log(filters);
-    }
-    if(checked1){
-
-    }
-  },[checked1,checked2])
 
 
+  // useEffect(() => {
+  //   if (checked2) {
+  //     let resultFilter = allProducts?.filter(i => i.pics.length)
+  //     dispatch(increment(resultFilter))
+  //   } else {
+  //     dispatch(increment(allProducts))
+  //   }
+  //   if (checked1) {
+
+  //   }
+  // }, [checked1, checked2])
+
+  useEffect(() => {
+    const res= filteringByPrice(allProducts,priceLess,priceMore)
+    dispatch(increment(res))
+  }, [priceLess, priceMore])
+
+  const toggleBtn = () => {
+    setToggle(!toggle)
+  }
 
   return (
     <div className='flex lg:px-40 px-5'>
@@ -86,7 +100,42 @@ function Main({ datafilter, setCategoryId, setDataFilter }) {
         </ul>
         <div>
           <FilterSideBar id={id} allcategory={allcategory} />
-          <div className='flex flex-col gap-10'>
+          <div className='flex flex-col gap-10 '>
+            <div>
+              <span className='flex items-center cursor-pointer' onClick={toggleBtn}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`size-6 ml-5 transition-all ${!toggle ? 'rotate-0' : 'rotate-180'}`}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
+                </svg>
+                قیمت
+              </span>
+              <div className={`flex-col justify-center gap-5 overflow-hidden transition-all duration-1000 ease-in-out my-5 ${toggle ? 'max-h-96 flex' : ' max-h-0'}`}>
+                <div className='flex justify-between items-center'>
+                  <span>حداقل</span>
+                  <select name="less" id="" className='border rounded-lg p-1' value={priceLess} onChange={(e) => setPriceLess(e.target.value)}>
+                    <option value="default">default</option>
+                    <option value="10000">10 هزار تومان</option>
+                    <option value="20000">20 هزار تومان</option>
+                    <option value="30000">30 هزار تومان</option>
+                    <option value="50000">50 هزار تومان</option>
+                    <option value="100000">100 هزار تومان</option>
+                    <option value="120000000">120 میلیون تومان</option>
+                  </select>
+                </div>
+                <div className='flex justify-between items-center'>
+                  <span>حداکثر</span>
+                  <select name="more" id="" className='border rounded-lg p-1' value={priceMore} onChange={(e) => setPriceMore(e.target.value)}>
+                    <option value="default">default</option>
+                    <option value="120000000">120 میلیون تومان</option>
+                    <option value="100000">100 هزار تومان</option>
+                    <option value="50000">50 هزار تومان</option>
+                    <option value="30000">30 هزار تومان</option>
+                    <option value="20000">20 هزار تومان</option>
+                    <option value="10000">10 هزار تومان</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
             <label htmlFor="toggle1" className="flex gap-28 items-center cursor-pointer">
               <input type="checkbox" id="toggle1" checked={checked1} onChange={handleCheck} className="hidden" />
               <span className="ml-3 text-gray-700 font-medium">معاوضه</span>
@@ -106,7 +155,7 @@ function Main({ datafilter, setCategoryId, setDataFilter }) {
         </div>
       </div>
       <div className='w-4/5'>
-        <PostBox post={datafilter} />
+        <PostBox post={allFilterProducts.length ? allFilterProducts : allProducts} />
       </div>
     </div>
   )
