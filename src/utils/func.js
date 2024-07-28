@@ -30,20 +30,10 @@ const relaitiveTimePost = (postedTime) => {
 
 const filterInputSearch = (product, search) => {
   if (search) {
-    const resultFilterSearch = product?.posts?.filter((item) =>
+    const resultFilterSearch = product?.filter((item) =>
       item.title.includes(search)
     );
     return resultFilterSearch;
-  } else {
-    return product?.posts;
-  }
-};
-
-const filterCategory = (product, category) => {
-  if (category) {
-    return getPostPoblished({ categoryId: category?.categoryID }).then(
-      (res) => res
-    );
   } else {
     return product;
   }
@@ -64,21 +54,23 @@ const filterQuryParams = (currentQuery, newQuery) => {
   };
 };
 
-const filteringByPrice = (data,filterData,priceLess,priceMore) => {
+const filteringByPrice = (data, priceLess, priceMore) => {
   if (priceLess == "default") {
     if (priceMore == "default") {
-      return data
-    }else{
-      let result=filterData?.filter(item=>item.price <= priceMore)
-      return result
+      return data;
+    } else {
+      let result = data?.filter((item) => item.price <= priceMore);
+      return result;
     }
-  }else{
-    if(priceMore == 'default'){
-      let result=filterData?.filter(item=>item.price >= priceLess)
-      return result
-    }else{
-      let result=filterData?.filter(item=>item.price >= priceLess && item.price <= priceMore)
-      return result
+  } else {
+    if (priceMore == "default") {
+      let result = data?.filter((item) => item.price >= priceLess);
+      return result;
+    } else {
+      let result = data?.filter(
+        (item) => item.price >= priceLess && item.price <= priceMore
+      );
+      return result;
     }
   }
 };
@@ -87,7 +79,6 @@ export {
   getCookieCity,
   relaitiveTimePost,
   filterInputSearch,
-  filterQuryParams, 
-  filterCategory,
+  filterQuryParams,
   filteringByPrice,
 };

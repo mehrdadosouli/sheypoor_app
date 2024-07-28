@@ -11,12 +11,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { increment } from '../redux/dataSlice'
 
 
-function Main({ setCategoryId }) {
+function Main({ setCategoryId,checked1,checked2,setChecked1,setChecked2 }) {
   const allProducts = useSelector((data) => data?.data?.products)
   const allFilterProducts = useSelector((data) => data?.data?.filtersProducts)
   const dispatch=useDispatch()
-  const [checked1, setChecked1] = useState(false);
-  const [checked2, setChecked2] = useState(false);
+  // const [checked1, setChecked1] = useState(false);
+  // const [checked2, setChecked2] = useState(false);
   const [toggle, setToggle] = useState(false);
   const [priceMore, setPriceMore] = useState('default');
   const [priceLess, setPriceLess] = useState('default');
@@ -39,20 +39,20 @@ function Main({ setCategoryId }) {
   };
 
 
-  useEffect(() => {
-    if (checked2) {
-      let resultFilter = allFilterProducts?.filter(i => i.pics.length)
-      dispatch(increment(resultFilter))
-    } else {
-      dispatch(increment(allProducts))
-    }
-    if (checked1) {
+  // useEffect(() => {
+  //   if (checked2) {
+  //     let resultFilter = allProducts?.filter(i => i.pics.length)
+  //     dispatch(increment(resultFilter))
+  //   } else {
+  //     dispatch(increment(allProducts))
+  //   }
+  //   if (checked1) {
 
-    }
-  }, [checked1, checked2])
+  //   }
+  // }, [checked1, checked2])
 
   useEffect(() => {
-    const res= filteringByPrice(allProducts,allFilterProducts,priceLess,priceMore)
+    const res= filteringByPrice(allProducts,priceLess,priceMore)
     dispatch(increment(res))
   }, [priceLess, priceMore])
 
@@ -137,7 +137,7 @@ function Main({ setCategoryId }) {
             </div>
 
             <label htmlFor="toggle1" className="flex gap-28 items-center cursor-pointer">
-              <input type="checkbox" id="toggle1" checked={checked1 && checked1} onChange={handleCheck} className="hidden" />
+              <input type="checkbox" id="toggle1" checked={checked1} onChange={handleCheck} className="hidden" />
               <span className="ml-3 text-gray-700 font-medium">معاوضه</span>
               <div className={`w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 ${checked1 ? 'bg-green-500' : 'bg-gray-400'}`}>
                 <div className={`w-6 h-6 bg-white rounded-full shadow-md transform transition duration-300 ${!checked1 ? 'translate-x-0' : '-translate-x-6'}`} />
@@ -145,7 +145,7 @@ function Main({ setCategoryId }) {
             </label>
 
             <label htmlFor="toggle2" className="flex gap-12 items-center cursor-pointer">
-              <input type="checkbox" id="toggle2" checked={checked2 && checked2} onChange={handleCheck} className="hidden" />
+              <input type="checkbox" id="toggle2" checked={checked2} onChange={handleCheck} className="hidden" />
               <span className="ml-3 text-gray-700 font-medium">فقط عکس دار</span>
               <div className={`w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 ${checked2 ? 'bg-green-500' : 'bg-gray-400'}`}>
                 <div className={`w-6 h-6 bg-white rounded-full shadow-md transform transition duration-300 ${!checked2 ? 'translate-x-0' : '-translate-x-6'}`} />
@@ -155,7 +155,7 @@ function Main({ setCategoryId }) {
         </div>
       </div>
       <div className='w-4/5'>
-        <PostBox post={allFilterProducts} />
+        <PostBox post={allFilterProducts.length ? allFilterProducts : allProducts} />
       </div>
     </div>
   )
