@@ -21,7 +21,7 @@ function FilterSideBar({ allcategory, id }) {
     }
 
     useEffect(()=>{
-        let result=allFilterProducts.filter(i=>i.dynamicFields.map(item=>item))
+        // let result=allFilterProducts.filter(i=>i.dynamicFields.map(item=>item))
     },[filterState])
     return (
         <div>

@@ -15,8 +15,6 @@ function Main({ setCategoryId,checked1,checked2,setChecked1,setChecked2 }) {
   const allProducts = useSelector((data) => data?.data?.products)
   const allFilterProducts = useSelector((data) => data?.data?.filtersProducts)
   const dispatch=useDispatch()
-  // const [checked1, setChecked1] = useState(false);
-  // const [checked2, setChecked2] = useState(false);
   const [toggle, setToggle] = useState(false);
   const [priceMore, setPriceMore] = useState('default');
   const [priceLess, setPriceLess] = useState('default');
@@ -34,23 +32,10 @@ function Main({ setCategoryId,checked1,checked2,setChecked1,setChecked2 }) {
     }
     if (e.target.id == 'toggle2') {
       setChecked2(!checked2);
-      console.log(checked2);
     }
   };
-
-
-  // useEffect(() => {
-  //   if (checked2) {
-  //     let resultFilter = allProducts?.filter(i => i.pics.length)
-  //     dispatch(increment(resultFilter))
-  //   } else {
-  //     dispatch(increment(allProducts))
-  //   }
-  //   if (checked1) {
-
-  //   }
-  // }, [checked1, checked2])
-
+  
+  console.log(allProducts);
   useEffect(() => {
     const res= filteringByPrice(allProducts,priceLess,priceMore)
     dispatch(increment(res))
@@ -155,7 +140,7 @@ function Main({ setCategoryId,checked1,checked2,setChecked1,setChecked2 }) {
         </div>
       </div>
       <div className='w-4/5'>
-        <PostBox post={allFilterProducts?.length ? allFilterProducts : allProducts} />
+        <PostBox post={allFilterProducts} />
       </div>
     </div>
   )
