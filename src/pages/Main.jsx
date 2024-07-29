@@ -35,7 +35,6 @@ function Main({ setCategoryId,checked1,checked2,setChecked1,setChecked2 }) {
     }
   };
   
-  console.log(allProducts);
   useEffect(() => {
     const res= filteringByPrice(allProducts,priceLess,priceMore)
     dispatch(increment(res))
