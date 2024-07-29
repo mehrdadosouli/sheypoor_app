@@ -74,6 +74,33 @@ const filteringByPrice = (data, priceLess, priceMore) => {
     }
   }
 };
+
+const filterSideBar = (filterState, allProducts) => {
+  let resultModelFilter = allProducts.filter((i) =>
+    i.dynamicFields.some((item) => {
+      if (item.slug == "model" && filterState.model != "پیش فرض") {
+        return item.data <= filterState.model;
+      }
+      if (item.slug == "model" && filterState.model == "پیش فرض") {
+        return allProducts;
+      }
+    })
+  );
+
+  if (filterState.operation) {
+    resultModelFilter = resultModelFilter.filter((i) =>
+      i.dynamicFields.some((item) => {
+        if (item.slug == "operation" && filterState.operation != "پیش فرض") {
+          return item.data == filterState.operation;
+        }
+        if (item.slug == "operation" && filterState.operation == "پیش فرض") {
+          return resultModelFilter;
+        }
+      })
+    );
+  }
+  return resultModelFilter
+};
 export {
   setCookieCity,
   getCookieCity,
@@ -81,4 +108,5 @@ export {
   filterInputSearch,
   filterQuryParams,
   filteringByPrice,
+  filterSideBar,
 };

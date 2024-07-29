@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { increment } from "../redux/dataSlice"
+import { filterSideBar } from "../utils/func"
 
 function FilterSideBar({ allcategory, id }) {
     const allProducts = useSelector((data) => data?.data?.products)
@@ -23,27 +24,7 @@ function FilterSideBar({ allcategory, id }) {
     }
 
     useEffect(() => {
-        let resultModelFilter = allProducts?.filter(i => i?.dynamicFields?.some(item => {
-            if (item.slug == 'model' && filterState.model != 'پیش فرض') {
-                return item?.data <= filterState.model
-            }
-            if (item.slug == 'model' && filterState.model == 'پیش فرض') {
-                return allProducts
-            }
-        }))
-
-
-        if (filterState.operation) {
-            resultModelFilter = resultModelFilter?.filter(i => i?.dynamicFields?.some(item => {
-                if (item.slug == 'operation' && filterState.operation != "پیش فرض") {
-                    return item?.data == filterState.operation
-                }
-                if (item.slug == 'operation' && filterState.operation == 'پیش فرض') {
-                    return resultModelFilter
-                }
-            }))
-        }
-        dispatch(increment(resultModelFilter))
+        dispatch(increment(filterSideBar(filterState, allProducts)))
     }, [filterState])
     return (
         <div>
