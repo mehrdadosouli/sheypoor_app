@@ -7,6 +7,8 @@ function Header({ search, changeHandler, focusHandler, modal, setQuery, setSearc
   // const queryClient = useQueryClient()
   // const { data: allcitys } = useQuery({ queryKey: ['fetchAllCity'], queryFn: getCities ,initialData:()=>{const cachedData = queryClient.getQueryData(['fetchAllCity']); console.log(cachedData) ;return undefined} })
   const [showModal, setShowModal] = useState(false)
+  const [step,setStep]=useState(1)
+  const [dataset,setDataset]=useState('')
   const [inputVal, setInputVal] = useState('')
   const cityStorage = getCookieCity()
 
@@ -20,7 +22,11 @@ function Header({ search, changeHandler, focusHandler, modal, setQuery, setSearc
     setShowModal(true)
   }
   const closeHandler = (e) => {
-    console.log('close');
+    console.log('close btn');
+  }
+  const selectCityHandler = (e) => {
+    setStep(2);
+    setDataset(e.target.dataset.provinceId)
   }
 
   window.addEventListener('click', (e) => {
@@ -28,6 +34,7 @@ function Header({ search, changeHandler, focusHandler, modal, setQuery, setSearc
       setShowModal(false)
     }
   })
+
 
   return (
 
@@ -88,14 +95,17 @@ function Header({ search, changeHandler, focusHandler, modal, setQuery, setSearc
               <input type="text" className="w-[90%] mx-auto border border-solid border-r-gray-400 outline-none p-2 rounded-md" value={inputVal} onChange={(e) => setInputVal(e.target.value)} placeholder="جستجو در شهر ها" />
             </div>
             {
-              allcity && <ul className="flex flex-col gap-10"> {allcity?.provinces.map(item =>
-                <li className="w-[90%] mx-auto inline-flex justify-between items-center pb-2 hover:cursor-pointer border-b-2 border-solid border-gray-200" key={item.id}>
+              allcity && <ul className="flex flex-col gap-10"> 
+              {(step == 1 ? allcity?.provinces : allcity?.cities?.filter(item =>item.province_id == dataset)).map(item =>
+                <li className="w-[90%] mx-auto inline-flex justify-between items-center pb-2 hover:cursor-pointer border-b-2 border-solid border-gray-200" key={item.id} data-province-id={item.id} onClick={selectCityHandler}>
                   {item.name}
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#212020" className="size-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                   </svg>
                 </li>
-              )}</ul>
+              )
+            }  
+              </ul>
             }
           </div>
         </div>
