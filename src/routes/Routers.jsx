@@ -11,6 +11,7 @@ import { getPostPoblished } from '../services/getPostPublished'
 import { useQuery } from '@tanstack/react-query'
 import { useSelector, useDispatch } from 'react-redux'
 import { addToProducts, increment } from '../redux/dataSlice'
+import { getCities } from '../services/allCities'
 
 
 
@@ -24,6 +25,8 @@ function Routers() {
     const [modal, setModal] = useState(false)
     const [searchParam, setSearchParam] = useSearchParams()
     const { data: allposts, error, isLoading } = useQuery({ queryKey: ['postpoblish'], queryFn: () => getPostPoblished() })
+    const { data: allcity, isLoading:loading } = useQuery({ queryKey: ['fetchAllCity'], queryFn: getCities })
+
     const navigate = useNavigate()
     let cookie = getCookieCity()
     const dispatch = useDispatch()
@@ -55,11 +58,8 @@ function Routers() {
         }
     }, [])
 
-    useEffect(() => {  
-        if (error) {  
-            console.error("Error fetching posts:", error);  
-        }  
-        if (!isLoading && allposts) {  
+    useEffect(() => {   
+        if (!isLoading && allposts?.posts) {  
             dispatch(addToProducts(allposts?.posts));  
             dispatch(increment(allposts?.posts));  
         }  
@@ -87,9 +87,9 @@ function Routers() {
 
     return (
         <div>
-            <Header search={search} changeHandler={changeHandler} focusHandler={focusHandler} modal={modal} setQuery={setQuery} setSearch={setSearch} closBtnHandler={closBtnHandler} />
+            <Header search={search} changeHandler={changeHandler} focusHandler={focusHandler} modal={modal} setQuery={setQuery} setSearch={setSearch} closBtnHandler={closBtnHandler}  allcity={allcity} loading={loading} />
             <Routes>
-                <Route path='/' element={<Home />} />
+                <Route path='/' element={<Home allcity={allcity} loading={loading} />} />
                 <Route path='/main' element={<Main setCategoryId={setCategoryId} checked1={checked1} checked2={checked2} setChecked1={setChecked1} setChecked2={setChecked2} />} />
             </Routes>
             <Footer />

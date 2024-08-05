@@ -49,3 +49,18 @@
     margin-right: 3rem;
   }
 }
+/* For Firefox Browser */
+.scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #00000020 #fff;
+}
+
+/* For Chrome, EDGE, Opera, Others */
+
+.scrollbar::-webkit-scrollbar-track { 
+  background: #fff;
+}
+
+.scrollbar::-webkit-scrollbar-thumb { 
+  background:#000;
+}

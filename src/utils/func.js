@@ -31,7 +31,7 @@ const relaitiveTimePost = (postedTime) => {
 const filterInputSearch = (product, search) => {
   if (search) {
     const resultFilterSearch = product?.filter((item) =>
-      item.title.includes(search)
+      item?.title?.includes(search)
     );
     return resultFilterSearch;
   } else {

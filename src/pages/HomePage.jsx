@@ -6,12 +6,11 @@ import { useNavigate } from 'react-router-dom'
 import Loading from '../components/Loading'
 import { FaSearch } from 'react-icons/fa'
 
-function Home() {
+function Home({loading,allcity}) {
   const [search, setSearch] = useState('')
   const [filterCity, setFilterCity] = useState([])
   const navigate = useNavigate()
   let cookie = getCookieCity() 
-  const { data: allcity, isLoading } = useQuery({ queryKey: ['fetchAllCity'], queryFn: getCities })
 
   const searchHandler = (e) => {
     setSearch(e.target.value)
@@ -50,7 +49,7 @@ function Home() {
       <h2 className='font-extrabold font-iransans-bold'>شهر های پر بازدید</h2>
       <div className='grid grid-cols-5 gap-10 my-5'>
         {
-          isLoading ? <Loading /> :
+          loading ? <Loading /> :
             resultCity?.map(item => <span className='w-fit cursor-pointer' key={item.id} onClick={(e)=>clickHandler(e,item.id)}>{item.name}</span>)
         }
       </div>

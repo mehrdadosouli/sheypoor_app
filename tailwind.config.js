@@ -10,7 +10,11 @@ export default {
       'iransans-medium':'iransans-medium',
       'iransans-bold':'iransans-bold',
     },
-    extend: {},
+    extend: {
+      colors:{
+        "bg-gray-light":"rgba(125, 125, 125, 0.5)"
+      }
+    },
   },
   plugins: [],
 }

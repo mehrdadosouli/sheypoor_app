@@ -9,10 +9,10 @@ import FilterSideBar from '../components/FilterSideBar'
 import { filteringByPrice } from '../utils/func'
 import { useDispatch, useSelector } from 'react-redux'
 import { increment } from '../redux/dataSlice'
+import { getPostPoblished } from '../services/getPostPublished'
 
 
 function Main({ setCategoryId,checked1,checked2,setChecked1,setChecked2 }) {
-  const allProducts = useSelector((data) => data?.data?.products)
   const allFilterProducts = useSelector((data) => data?.data?.filtersProducts)
   const dispatch=useDispatch()
   const [toggle, setToggle] = useState(false);
@@ -21,6 +21,7 @@ function Main({ setCategoryId,checked1,checked2,setChecked1,setChecked2 }) {
   const [id, setId] = useState()
   const navigate = useNavigate()
   const { data: allcategory } = useQuery({ queryKey: ['getcategory'], queryFn: () => getAllCategory() })
+  const { data: allposts, error, isLoading } = useQuery({ queryKey: ['postpoblish'], queryFn: () => getPostPoblished() })
   const clickHandler = () => {
     navigate('/main')
     window.location.reload()
@@ -36,9 +37,9 @@ function Main({ setCategoryId,checked1,checked2,setChecked1,setChecked2 }) {
   };
   
   useEffect(() => {
-    const res= filteringByPrice(allProducts,priceLess,priceMore)
+    const res= filteringByPrice(allposts,priceLess,priceMore)
     dispatch(increment(res))
-  }, [priceLess, priceMore])
+  }, [priceLess, priceMore,allposts])
 
   const toggleBtn = () => {
     setToggle(!toggle)
